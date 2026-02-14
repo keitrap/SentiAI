@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SentinAI - The Autonomous Cloud Compliance Auditor 🛡️
 
-## Getting Started
+**SentinAI** is a next-generation security tool that lets you audit cloud infrastructure using **Natural Language**. 
 
-First, run the development server:
+Instead of writing complex SQL queries or navigating AWS dashboards, you simply tell SentinAI: 
+> *"Ensure all S3 buckets are private and encrypted."*
 
+## 🚀 How it Works
+1.  **Natural Language Input**: You describe your compliance policy in plain English.
+2.  **AI Parsing (Groq/Llama3)**: The AI translates your request into precise technical rules (e.g., `s3_bucket.public_access == False`).
+3.  **Audit Engine**: The Python backend runs these rules against your cloud infrastructure (Mocked for this demo).
+4.  **Risk Analysis**: The system calculates a security score and highlights critical violations.
+
+## ⚡ Tech Stack (2026 Ready)
+-   **Frontend**: Next.js 14, TypeScript, TailwindCSS, Framer Motion (Glassmorphism UI).
+-   **Backend**: Python FastAPI (Serverless).
+-   **AI**: Groq API (Llama 3 8b) for sub-second NLP parsing.
+-   **Database**: Supabase (PostgreSQL) for audit history.
+-   **Auth**: Clerk for secure user management.
+
+## 🛠️ Features
+-   **AI-Driven Policy Engine**: No need to learn Rego or custom query languages.
+-   **Real-time Risk Scoring**: Instant feedback on your security posture.
+-   **Mock Cloud Mode**: Simulates a real AWS environment for safe testing and demos.
+-   **Audit History**: Tracks compliance over time.
+
+## 📦 Getting Started
+
+### 1. Clone & Install
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/sentinai.git
+cd sentinai
+npm install
+pip install -r requirements.txt
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Configure Environment
+Create `.env.local` with your Clerk, Supabase, and Groq keys (see `.env.example`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3. Run Locally
+```bash
+npm run dev
+```
+Visit `http://localhost:3000`.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔮 Future Roadmap
+-   Active AWS/Azure Integration (Boto3).
+-   Auto-Remediation (AI fixes the bugs it finds).
+-   PDF Report Generation.

@@ -2,8 +2,11 @@
 
 import { useState } from "react";
 import { Send, Loader2, AlertTriangle, CheckCircle, ShieldAlert } from "lucide-react";
+import { supabase } from "@/lib/supabase";
+import { useUser } from "@clerk/nextjs";
 
 export default function AuditForm() {
+    const { user } = useUser();
     const [policy, setPolicy] = useState("");
     const [loading, setLoading] = useState(false);
     const [result, setResult] = useState<any>(null);
@@ -15,6 +18,7 @@ export default function AuditForm() {
         setResult(null);
 
         try {
+            // 1. Run Audit via Python Backend
             const res = await fetch("/api/py/audit", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -22,6 +26,20 @@ export default function AuditForm() {
             });
             const data = await res.json();
             setResult(data);
+
+            // 2. Save to Supabase (History)
+            if (user && data) {
+                // We interact with Supabase client-side here.
+                // Ensure RLS policies allow authenticated inserts.
+                await supabase.from("audits").insert({
+                    user_id: user.id,
+                    policy_input: policy,
+                    risk_score: data.risk_score,
+                    findings: data.findings,
+                    provider: "mock"
+                });
+            }
+
         } catch (error) {
             console.error("Audit failed:", error);
         } finally {
